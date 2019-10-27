@@ -15,12 +15,12 @@ class LikesController extends Controller
         $this->like = $like;
     }
 
-    public function store(Request $request)
+    public function store($id, Request $request)
     {
         $userLogged = $request->userLogged; //id usuario logado
-        $target = $request->target; //usuario que receberá o like
+        $targetUser = $id; //usuario que receberá o like
 
-        $devExists = User::where('id', $target)->exists();
+        $devExists = User::where('id', $targetUser)->exists();
 
         if(!$devExists){
             return response()->json(['data' => 'Usuário não existe']);
@@ -28,7 +28,7 @@ class LikesController extends Controller
         }
 
         DB::table('likes')->insert([
-            'target_id' => $target,
+            'target_id' => $targetUser,
             'users_id' => $userLogged,
         ]);
 

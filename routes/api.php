@@ -16,6 +16,6 @@ use Illuminate\Http\Request;
 Route::namespace('Api')->group(function(){
     Route::resource('/devs', 'UsersController');
 
-    Route::resource('/likes', 'LikesController');
-    Route::resource('/dislikes', 'DislikesController');
+    Route::resource('/likes/{id}', 'LikesController');
+    Route::resource('/dislikes/{id}', 'DislikesController');
 });

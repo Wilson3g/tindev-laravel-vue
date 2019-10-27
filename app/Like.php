@@ -5,7 +5,7 @@ namespace App;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class dislike extends Model
+class Like extends Model
 {
     protected $fillable = [
         'target',
