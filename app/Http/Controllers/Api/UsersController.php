@@ -18,14 +18,12 @@ class UsersController extends Controller
 
     public function index()
     {
-        // $users = $this->user->all();
-        // return response()->json(['data' => $users]);
+        $users = $this->user->all();
+        return response()->json(['data' => $users]);
 
-        $select = DB::table('users as u')
+        /*$select = DB::table('users as u')
             ->leftJoin('likes as l', 'l.users_id', '=', 'u.id')
-            ->get();
-
-        
+            ->get();*/
     }
 
     public function store(Request $request)
