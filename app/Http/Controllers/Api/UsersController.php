@@ -45,19 +45,18 @@ class UsersController extends Controller
     
             $userExists = $this->user->where('user', $user);
 
-            if($userExists == $username){
-                return response()->json(['data'=> 'Já cadastrado!']);
-                throw new \Exception('Já cadastrado!');
+            if (DB::table('users')->where('user', $user)->count() == 0) {
+                DB::table('users')->insert([
+                    'name' => $name, 
+                    'bio' => $bio, 
+                    'user' => $user, 
+                    'avatar' => $avatar
+                ]);
+                
+                return response()->json(['data'=> 'Cadastrado com sucesso'], 200);
+            }else{
+                return response()->json(['data'=> 'Já cadastrado'], 200);
             }
-
-            DB::table('users')->insert([
-                'name' => $name, 
-                'bio' => $bio, 
-                'user' => $user, 
-                'avatar' => $avatar
-            ]);
-    
-            return response()->json(['data'=> 'Cadastrado com sucesso'], 200);
 
         } catch (Exception $e) {
             echo 'Errno: ',  $e->getMessage(), "\n";
