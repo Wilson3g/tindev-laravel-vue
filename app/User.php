@@ -2,10 +2,11 @@
 
 namespace App;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Like;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable implements JWTSubject
 {
     protected $fillable = [
         'name',
@@ -17,6 +18,16 @@ class User extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function getJWTIdentifier() 
+    {    
+        return $this->getKey();
+    }
+    
+    public function getJWTCustomClaims() 
+    {
+        return [];
     }
 }
 

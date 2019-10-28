@@ -14,8 +14,12 @@ use Illuminate\Http\Request;
 */
 
 Route::namespace('Api')->group(function(){
-    Route::resource('/devs', 'UsersController');
+    Route::post('/login', 'LoginController@login');
 
-    Route::resource('/likes/{id}', 'LikesController');
-    Route::resource('/dislikes/{id}', 'DislikesController');
+    Route::middleware('jwt.auth')->get('users', function () {
+        Route::resource('/devs', 'UsersController');
+
+        Route::resource('/likes/{id}', 'LikesController');
+        Route::resource('/dislikes/{id}', 'DislikesController');
+    });
 });
