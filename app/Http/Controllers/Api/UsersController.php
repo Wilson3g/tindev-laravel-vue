@@ -30,6 +30,7 @@ class UsersController extends Controller
     {
         try{
             $username = $request->username;
+            $password = sha1($request->password);
         
             $client = new Client();
             $res = $client->request('GET', 'https://api.github.com/users/'.$username.'');
@@ -42,14 +43,13 @@ class UsersController extends Controller
             $avatar = $json['avatar_url'];
             $bio = $json['bio'];
             $name = $json['name'];
-    
-            $userExists = $this->user->where('user', $user);
 
             if (DB::table('users')->where('user', $user)->count() == 0) {
                 DB::table('users')->insert([
                     'name' => $name, 
                     'bio' => $bio, 
                     'user' => $user, 
+                    'password' => $password,
                     'avatar' => $avatar
                 ]);
                 
