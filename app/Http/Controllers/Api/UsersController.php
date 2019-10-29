@@ -30,7 +30,7 @@ class UsersController extends Controller
     {
         try{
             $username = $request->username;
-            $password = sha1($request->password);
+            $password = $request->password;
         
             $client = new Client();
             $res = $client->request('GET', 'https://api.github.com/users/'.$username.'');
