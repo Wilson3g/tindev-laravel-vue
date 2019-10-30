@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
@@ -14,12 +14,20 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            // dados pessoais
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('bio')->nullable();
             $table->string('user');
             $table->string('avatar');
+
+            // autenticacao
+            $table->string('password', 254)->nullable();
+
+            $table->rememberToken();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -33,3 +41,4 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+

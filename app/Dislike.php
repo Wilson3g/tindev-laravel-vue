@@ -12,6 +12,14 @@ class Dislike extends Model
         'user_id'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::updating(function($model){
+            return false;
+        });
+    }
+
     public function users()
     {
         return $this->belongsTo(User::class);

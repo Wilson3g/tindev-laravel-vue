@@ -17,9 +17,12 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = $this->user->all();
-        return response()->json(['data' => $users]);
+        $users = $this->user
+        ->leftJoin('likes as l', 'l.target_id', '=', 'users.id')
+        ->whereNull('l.users_id')
+        ->get();
 
+        return response()->json(['data' => $users]);
     }
 
     public function store(Request $request)
@@ -33,11 +36,18 @@ class UsersController extends Controller
             $json = json_decode($body, true);
 
             if ($this->user->where('user', $json['login'])->count() == 0) {
-                $this->user->create($json);
+                $this->user->create([
+                    'name' => $json['name'],
+                    'bio' => $json['bio'],
+                    'user' => $json['login'],
+                    'avatar' => $json['avatar_url'],
+                    'password' => bcrypt($request['password'])
+                ]);
+
                 return response()->json(['data'=> 'Cadastrado com sucesso'], 200);
-            }else{
-                return response()->json(['data'=> 'Já cadastrado'], 200);
             }
+            
+            return response()->json(['data'=> 'Já cadastrado'], 200);
 
         } catch (Exception $e) {
             echo 'Erno: ',  $e->getMessage(), "\n";

@@ -16,6 +16,10 @@ class User extends Authenticatable implements JWTSubject
         'avatar'
     ];
 
+    protected $hidden = [
+        'password', 'remember_token'
+    ];
+
     public function likes()
     {
         return $this->hasMany(Like::class);

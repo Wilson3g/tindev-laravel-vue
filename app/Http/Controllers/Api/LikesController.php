@@ -10,22 +10,20 @@ use Illuminate\Http\Request;
 
 class LikesController extends Controller
 {
-    public function __construct(Like $like)
+    public function __construct(Like $like, User $user)
     {
         $this->like = $like;
+        $this->user = $user;
     }
 
     public function store($id, Request $request)
     {
-        $targetUser = $id; //usuario que receberá o like
-
-        if($this->like->where('id', $targetUser)->count() == 0){
+        if($this->user->where('id', $id)->count() == 0){
             return response()->json(['data' => 'Usuário não existe']);
-            throw new \Exception('não existe');
         }
 
         $this->like->insert([
-            'target_id' => $targetUser,
+            'target_id' => $id,
             'users_id' => $request['userLogged'],
         ]);
 

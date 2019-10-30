@@ -13,13 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::namespace('Api')->group(function(){
     Route::post('/login', 'LoginController@login');
 
-
         Route::resource('/devs', 'UsersController');
 
-        Route::resource('/likes/{id}', 'LikesController');
-        Route::resource('/dislikes/{id}', 'DislikesController');
+        Route::get('/likes/{id}', 'LikesController@index');
+        Route::get('/dislikes/{id}', 'DislikesController@index');
 
 });
