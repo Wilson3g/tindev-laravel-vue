@@ -17,21 +17,18 @@ class DislikesController extends Controller
 
     public function store($id, Request $request)
     {
-        $userLogged = $request->userLogged; //id usuario logado
         $targetUser = $id; //usuario que receberá o like
 
-        $devExists = User::where('id', $targetUser)->exists();
-
-        if(!$devExists){
+        if($this->like->where('id', $targetUser)->count() == 0){
             return response()->json(['data' => 'Usuário não existe']);
             throw new \Exception('não existe');
         }
 
-        DB::table('dislikes')->insert([
+        $this->dislike->insert([
             'target_id' => $targetUser,
-            'users_id' => $userLogged,
+            'users_id' => $request['userLogged'],
         ]);
 
-        return response()->json(['data' => 'dislike']);
+        return response()->json(['data' => 'dislike'], 200);
     }
 }

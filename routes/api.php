@@ -16,10 +16,10 @@ use Illuminate\Http\Request;
 Route::namespace('Api')->group(function(){
     Route::post('/login', 'LoginController@login');
 
-    Route::middleware('jwt.auth')->get('users', function () {
+
         Route::resource('/devs', 'UsersController');
 
         Route::resource('/likes/{id}', 'LikesController');
         Route::resource('/dislikes/{id}', 'DislikesController');
-    });
+
 });
