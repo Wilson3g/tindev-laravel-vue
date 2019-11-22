@@ -4,7 +4,7 @@ Versão do projeto realizado pela Rocktseat (tindev) executado com Laravel.
 <h2>Requisitos</h2>
 <ul>
   <li>PHP 5^</li>
-  <li>Laravel 6</li>
+  <li>Laravel 5.5^</li>
   <li>Composer</li>
 </ul>
 
