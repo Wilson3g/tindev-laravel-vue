@@ -16,17 +16,38 @@ class LikesController extends Controller
         $this->user = $user;
     }
 
-    public function store($id, Request $request)
+    public function store(Request $request)
     {
-        if($this->user->where('id', $id)->count() == 0){
+        if($this->user->where('id', $request['userTarget'])->count() == 0){
             return response()->json(['data' => 'Usuário não existe']);
         }
 
-        $this->like->insert([
-            'target_id' => $id,
-            'users_id' => $request['userLogged'],
-        ]);
+        $checkLikeExists = $this->checkLikeExists($request->all());
 
-        return response()->json(['data' => 'like'], 200);
+        $test = [
+            'teste' => 'ola'
+        ];
+        
+            event(new Like($test));
+        
+
+        // $this->like->insert([
+        //     'target_id' => $request['userTarget'],
+        //     'users_id' => $request['userLogged'],
+        // ]);
+
+        return response()->json([
+            'message' => 'Like'
+        ], 200);
+    }
+
+    public function checkLikeExists($request)
+    {
+        $checkLikeExists = $this->like->where([
+            'target_id' => $request['userLogged'],
+            'users_id' => $request['userTarget']
+        ])->first();
+
+        return $checkLikeExists;
     }
 }

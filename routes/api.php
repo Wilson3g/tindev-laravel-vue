@@ -23,9 +23,7 @@ Route::namespace('Api')->group(function(){
     Route::group(['middleware' => 'api'], function () {
         Route::resource('/devs', 'UsersController');
 
-        Route::get('/likes/{id}', 'LikesController@index');
-        Route::get('/dislikes/{id}', 'DislikesController@index');
+        Route::post('/likes', 'LikesController@store');
+        Route::get('/dislikes/{id}', 'DislikesController@store');
     });
-        
-
 });
