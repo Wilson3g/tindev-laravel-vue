@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\Like;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use Log;
 class UserLike
 {
     /**
@@ -25,8 +25,7 @@ class UserLike
      * @return void
      */
     public function handle(Like $event)
-    {dd('x');
-        $ola = 'Olá mundo!!!';
-        Log::info($ola);
+    {
+        Log::info('Deu match');
     }
 }

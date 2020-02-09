@@ -7,6 +7,7 @@ use App\User;
 use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Events\Like  as UserMatch;
 
 class LikesController extends Controller
 {
@@ -24,12 +25,7 @@ class LikesController extends Controller
 
         $checkLikeExists = $this->checkLikeExists($request->all());
 
-        $test = [
-            'teste' => 'ola'
-        ];
-        
-            event(new Like($test));
-        
+        event(new UserMatch($checkLikeExists));
 
         // $this->like->insert([
         //     'target_id' => $request['userTarget'],
@@ -43,11 +39,13 @@ class LikesController extends Controller
 
     public function checkLikeExists($request)
     {
+    // ********ESTUDAR SOBRE ESTE COMPORTAMENTO********
+
         $checkLikeExists = $this->like->where([
             'target_id' => $request['userLogged'],
             'users_id' => $request['userTarget']
         ])->first();
 
-        return $checkLikeExists;
+        return $checkLikeExists->first();
     }
 }

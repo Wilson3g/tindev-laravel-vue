@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "89217859-c74c-4cd7-aae0-b25a7e4f94ab",
+		"_postman_id": "bc199b9a-26b5-473e-8c32-cdea435775dc",
 		"name": "tindev",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -26,7 +26,8 @@
 						{
 							"key": "username",
 							"value": "luanhenriquepp",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -65,7 +66,7 @@
 					"urlencoded": [
 						{
 							"key": "username",
-							"value": "[Github username]",
+							"value": "diego3g",
 							"type": "text"
 						}
 					]
@@ -105,13 +106,18 @@
 					"urlencoded": [
 						{
 							"key": "userLogged",
-							"value": "[logged user]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "userTarget",
+							"value": "1",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/likes/{target_id}",
+					"raw": "http://127.0.0.1:8000/api/likes",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -122,8 +128,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"likes",
-						"{target_id}"
+						"likes"
 					]
 				}
 			},
