@@ -29,6 +29,12 @@ class UsersController extends Controller
     {
         try{
 
+            if(count($request->all()) == 0){
+                return response()->json(['data' => 'Data vazio']);
+            } elseif(!$request->username) {
+                return response()->json(['data' => 'Username vazio']);
+            }
+
             $client = new Client();
             $res = $client->request('GET', 'https://api.github.com/users/'.$request['username'].'');
 
