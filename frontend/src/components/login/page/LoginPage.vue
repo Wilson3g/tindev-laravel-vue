@@ -1,22 +1,46 @@
 <template>
     <div class="login-container">
       <form>
-        <img src="../../assets/logo.svg" alt="Tindev"/>
+        <img src="../../../assets/logo.svg" alt="Tindev"/>
         <input 
           placeholder="Digite seu usuário no Github"
         />
-        <button type="submit">Enviar</button>
+        <button @click.prevent="submit" type="submit">Enviar</button>
       </form>
     </div>
 </template>
 
 <script>
     export default{
-        name: 'LoginPage',
+      name: 'LoginPage',
+      data() {
+        return {
+
+        }
+      },
+      components: {
+        submit(){
+          console.log('oka')
+          // var resource = this.$resource('http://127.0.0.1:8000/api/devs');
+
+          // resource.save({username: 'wilson3g'}).then(response => {
+          //   console.log(response)
+          // }, response => {
+          //   console.log(response)
+          // });
+        }
+      }
     }
 </script>
 
 <style>
+form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .login-container {
     height: 100%;
     display: flex;
