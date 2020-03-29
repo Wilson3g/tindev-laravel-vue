@@ -27,11 +27,11 @@ class LikesController extends Controller
 
         event(new UserMatch($checkLikeExists));
 
-        // $this->like->insert([
-        //     'target_id' => $request['userTarget'],
-        //     'users_id' => $request['userLogged'],
-        // ]);
-
+        $this->like->insert([
+            'target_id' => $request['userTarget'],
+            'users_id' => $request['userLogged'],
+        ]);
+dd('ola');
         return response()->json([
             'message' => 'Like'
         ], 200);
