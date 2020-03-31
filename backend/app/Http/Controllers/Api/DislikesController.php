@@ -10,16 +10,17 @@ use Illuminate\Http\Request;
 
 class DislikesController extends Controller
 {
-    public function __construct(Dislike $dislike)
+    public function __construct(Dislike $dislike, User $user)
     {
         $this->dislike = $dislike;
+        $this->user = $user;
     }
 
     public function store($id, Request $request)
     {
-        $targetUser = $id; //usuario que receberá o like
+        $targetUser = $id; 
 
-        if($this->like->where('id', $targetUser)->count() == 0){
+        if($this->user->where('id', $targetUser)->count() == 0){
             return response()->json(['data' => 'Usuário não existe']);
             throw new \Exception('não existe');
         }
