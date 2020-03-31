@@ -1,11 +1,12 @@
 <template>
     <div class="login-container">
-      <form>
+      <form @submit.prevent="submit()">
         <img src="../../../assets/logo.svg" alt="Tindev"/>
         <input 
           placeholder="Digite seu usuário no Github"
+          v-model="usernamer"
         />
-        <button @click.prevent="submit" type="submit">Enviar</button>
+        <button type="submit">Enviar</button>
       </form>
     </div>
 </template>
@@ -15,19 +16,24 @@
       name: 'LoginPage',
       data() {
         return {
-
+          usernamer: ''
         }
       },
-      components: {
+      methods: {
         submit(){
-          console.log('oka')
-          // var resource = this.$resource('http://127.0.0.1:8000/api/devs');
+          var formData = new FormData();
+          formData.append('username', this.username);
 
-          // resource.save({username: 'wilson3g'}).then(response => {
-          //   console.log(response)
-          // }, response => {
-          //   console.log(response)
-          // });
+          this.$http.post('http://127.0.0.1:8000/api/devs', formData, {
+            headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          }).then((res) =>{
+            this.$router.push({ name: 'home' })
+          }, res => {
+            console.log('Error' + res)
+          });
         }
       }
     }
