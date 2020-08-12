@@ -18,12 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::namespace('Api')->group(function(){
-    Route::post('/login', 'Auth\\jwtController@login');
+    Route::post('auth/login', 'AuthController@login');
 
     Route::group(['middleware' => 'api'], function () {
         Route::resource('/devs', 'UsersController');
 
-        Route::post('/likes', 'LikesController@store');
+        // Route::post('/login', 'UsersController@login');
+        Route::get('/likes/{id}', 'LikesController@store');
         Route::get('/dislikes/{id}', 'DislikesController@store');
     });
 });

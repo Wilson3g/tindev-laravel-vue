@@ -29,12 +29,6 @@ class UsersController extends Controller
     {
         try{
 
-            if(count($request->all()) == 0){
-                return response()->json(['data' => 'Data vazio']);
-            } elseif(!$request->username) {
-                return response()->json(['data' => 'Username vazio']);
-            }
-
             $client = new Client();
             $res = $client->request('GET', 'https://api.github.com/users/'.$request['username'].'');
 
@@ -45,12 +39,12 @@ class UsersController extends Controller
                 $this->user->create([
                     'name' => $json['name'],
                     'bio' => $json['bio'],
-                    'user' => $json['login'],
+                    'email' => $json['login'],
                     'avatar' => $json['avatar_url'],
                     'password' => bcrypt($request['password'])
                 ]);
 
-                return response()->json(['data'=> 'Cadastrado com sucesso'], 200);
+                return response()->json(['data'=> 'Cadastrado com sucesso'], 201);
             }
             
             return response()->json(['data'=> 'Já cadastrado'], 200);
@@ -59,5 +53,21 @@ class UsersController extends Controller
             echo 'Erno: ',  $e->getMessage(), "\n";
         }
         
+    }
+
+    public function login(Request $request)
+    {
+        // $password = bcrypt($request['password']);
+
+        $checkLogin = $this->user->where([
+            ['user', $request['username']],
+            ['password', $request['password']]
+        ]);
+dd($checkLogin->count());
+        if(!$checkLogin){
+            return response()->json(['data'=> 'Usuário não encontrado!'], 500);
+        }
+
+        return response()->json(['success'=> true], 200);
     }
 }
